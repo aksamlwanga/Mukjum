@@ -6,12 +6,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, Its PAUL testing the repository
-    - name: Run a multi-line script
-      run: |
+    
+    name: echo Hello, Its PAUL testing the repository
         echo To all on the collaborative team MUKJUM 
         echo test, and deploy your project.
