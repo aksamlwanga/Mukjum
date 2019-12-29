@@ -1,8 +1,14 @@
 from django.shortcuts import render
+from .models import Product
 
 
 def indexview(request):
-    return render(request,"index.html")
+    queryset=Product.objects.all()
+    context={
+        'object_list':queryset
+    }
+    return render(request,"index.html",context)
+    
 
 def checkOutView(request):
     return render(request,"check-out.html")
