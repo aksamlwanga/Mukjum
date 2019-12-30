@@ -11,7 +11,7 @@
                         <div class="col-lg-12">
                             <h1>2019</h1>
                             <h2>Lookbook.</h2>
-                            <a href="#" class="primary-btn">See More</a>
+                            <a href="" class="primary-btn">See More</a>
                         </div>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                         <div class="col-lg-12">
                             <h1>2019</h1>
                             <h2>Lookbook.</h2>
-                            <a href="#" class="primary-btn">See More</a>
+                            <a href="" class="primary-btn">See More</a>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                         <div class="col-lg-12">
                             <h1>2019</h1>
                             <h2>Lookbook.</h2>
-                            <a href="#" class="primary-btn">See More</a>
+                            <a href="" class="primary-btn">See More</a>
                         </div>
                     </div>
                 </div>
@@ -140,10 +140,27 @@
             </div>
                 <div class="row" id="product-list">
                 {% for i in object_list %}
-                {% comment %} <div class="col-lg-3 col-sm-6 mix all dresses bags">
+                 <div class="col-lg-3 col-sm-6 mix {{i.title | lower}}">
                     <div class="single-product-item">
                         <figure>
-                            <a href="#"><img src="{{ i.image.url }}" alt="{{ i.title}}"></a>
+                            <a href="#"><img src="{{ i.image_thumbnail.url }}" alt="{{ i.title}}"></a>
+                            {% if i.featured %}
+                            <div class="p-status">new</div>
+                            {% else %}
+                            <div class="p-status sale">sale</div>
+                            {% endif %}
+                            
+                        </figure>
+                        <div class="product-text">
+                            <h6>{{i.description}}</h6>
+                            <p>shs.{{i.price}}</p>
+                        </div>
+                    </div>
+                </div> 
+                 {% comment %} <div class="col-lg-3 col-sm-6">
+                     <div class="single-product-item">
+                        <figure>
+                            <a href="#"><img src="{{ i.image_thumbnail.url}}" alt="{{ i.title}}"></a>
                             {% if i.featured %}
                             <div class="p-status">new</div>
                             {% else %}
@@ -157,23 +174,6 @@
                         </div>
                     </div>
                 </div> {% endcomment %}
-                 <div class="col-lg-3 col-sm-6">
-                     <div class="single-product-item">
-                        <figure>
-                            <a href="#"><img src="{{ i.image.url}}" alt="{{ i.title}}"></a>
-                            {% if i.featured %}
-                            <div class="p-status">new</div>
-                            {% else %}
-                            <div class="p-status sale">sale</div>
-                            {% endif %}
-                            
-                        </figure>
-                        <div class="product-text">
-                            <h6>{{i.description}}</h6>
-                            <p>shs.{{i.price}}</p>
-                        </div>
-                    </div>
-                </div>
                 {% endfor %}   
                  
 
@@ -191,19 +191,14 @@
                         <div class="section-title">
                             <h2>2019 <br />#lookbook</h2>
                         </div>
-                        <p>Fusce urna quam, euismod sit amet mollis quis, vestibulum quis velit. Vestibulum malesuada
-                            aliquet libero viverra cursus. Aliquam erat volutpat. Morbi id dictum quam, ut commodo
-                            lorem. In at nisi nec arcu porttitor aliquet vitae at dui. Sed sollicitudin nulla non leo
-                            viverra scelerisque. Phasellus facilisis lobortis metus, sit amet viverra lectus finibus ac.
-                            Aenean non felis dapibus, placerat libero auctor, ornare ante. Morbi quis ex eleifend,
-                            sodales nulla vitae, scelerisque ante. Nunc id vulputate dui. Suspendisse consectetur rutrum
-                            metus nec scelerisque. s</p>
+                        <p>{{product.description}}</p>
+                            
                         <a href="#" class="primary-btn look-btn">See More</a>
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
                     <div class="lookbok-pic">
-                        <img src="{% static 'img/lookbok.jpg' %}" alt="">
+                        <img src="{{product.image.url}} " alt="">
                         <div class="pic-text">fashion</div>
                     </div>
                 </div>

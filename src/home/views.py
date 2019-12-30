@@ -4,8 +4,11 @@ from .models import Product
 
 def indexview(request):
     queryset=Product.objects.all()
+    lookBook=Product.objects.get(pk=9)
+
     context={
-        'object_list':queryset
+        'object_list':queryset,
+         'product'   : lookBook
     }
     return render(request,"index.html",context)
     
