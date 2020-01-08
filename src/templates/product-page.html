@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-lg-4">
                     <div class="page-breadcrumb">
-                        <h2>Shirts<span>.</span></h2>
-                        <a href="#">Home</a>
-                        <a href="#">Dresses</a>
-                        <a class="active" href="#">Night Dresses</a>
+                        <h2>{{object.title}}<span>.</span></h2>
+                        <a href="{% url 'product' %}">Home</a>
+                        <a href="{% url 'category' %}">Dresses</a>
+                        <a class="active" href="">{{object.name}}</a>
                     </div>
                 </div>
                 <div class="col-lg-8">
@@ -25,32 +25,31 @@
     <section class="product-page">
         <div class="container">
             <div class="product-control">
-                <a href="#">Previous</a>
-                <a href="#">Next</a>
+                <a href="{{ previous_product.get_absolute_url }}">Previous</a>
+                <a href="{{ next_product.get_absolute_url }}">Next</a>
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="product-slider owl-carousel">
+                        {% for img in images %}
                         <div class="product-img">
                             <figure>
-                                <img src="{% static 'img/product/product-1.jpg' %}" alt="">
+                               <a href="../../media/{{ img.image }}" ><img src="../../media/{{ img.image }}" alt="{{ i.title}}"> </a>
+                                 {% if object.featured %}
                                 <div class="p-status">new</div>
+                                {% else %}
+                                <div class="p-status sale">sale</div>
+                               {% endif %}
                             </figure>
                         </div>
-                        <div class="product-img">
-                            <figure>
-                                <img src="{% static 'img/product/product-1.jpg' %}" alt="">
-                                <div class="p-status">new</div>
-                            </figure>
-                        </div>
-                    </div>
-                    
+                         {% endfor %}  
+                  </div>  
                 </div>
                 <div class="col-lg-6">
                     <div class="product-content">
-                        <h2>Dotted Blue Shirt</h2>
+                        <h2>{{object.name}}</h2>
                         <div class="pc-meta">
-                            <h5>$22.90</h5>
+                            <h5>shs.{{object.price}}</h5>
                             <div class="rating">
                                 <i class="fa fa-star"></i>
                                 <i class="fa fa-star"></i>
@@ -59,11 +58,9 @@
                                 <i class="fa fa-star"></i>
                             </div>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo
-                            viverra maecenas accumsan lacus vel facilisis.</p>
+                        <p>{{ object.details }} </p>
                         <ul class="tags">
-                            <li><span>Category :</span> Men’s Wear</li>
+                            <li><span>Category :</span> {{object.catergory}}</li>
                             <li><span>Tags :</span> man, shirt, dotted, elegant, cool</li>
                         </ul>
                         <div class="product-quantity">
@@ -71,6 +68,7 @@
                                 <input type="text" value="1">
                             </div>
                         </div>
+
                         <a href="#" class="primary-btn pc-btn">Add to cart</a>
                         <ul class="p-info">
                             <li>Product Information</li>
@@ -79,6 +77,7 @@
                         </ul>
                     </div>
                 </div>
+                
             </div>
         </div>
     </section>
@@ -95,42 +94,24 @@
                 </div>
             </div>
             <div class="row">
+             {% for item in items %}
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-product-item">
                         <figure>
-                            <a href="#"><img src="{% static 'img/products/img-1.jpg' %}" alt=""></a>
+                            <a href="{{ item.get_absolute_url }}"><img src="../../media/{{ item.image.first.image }}" alt=""></a>
+                            {% if item.featured %}
                             <div class="p-status">new</div>
-                        </figure>
-                        <div class="product-text">
-                            <h6>Green Dress with details</h6>
-                            <p>$22.90</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <a href="#"><img src="{% static 'img/products/img-2.jpg' %}" alt=""></a>
+                            {% else %}
                             <div class="p-status sale">sale</div>
+                            {% endif %}
                         </figure>
                         <div class="product-text">
-                            <h6>Yellow Maxi Dress</h6>
-                            <p>$25.90</p>
+                            <h6>{{item.name}}</h6>
+                            <p>shs.{{item.price}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <a href="#"><img src="{% static 'img/products/img-3.jpg' %}" alt=""></a>
-                            <div class="p-status">new</div>
-                        </figure>
-                        <div class="product-text">
-                            <h6>One piece bodysuit</h6>
-                            <p>$19.90</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
                 <div class="col-lg-3 col-sm-6">
                     <div class="single-product-item">
                         <figure>
