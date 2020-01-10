@@ -1,0 +1,116 @@
+{% extends "required/base.html" %}
+{% load static %}
+{% block content %}
+{% block javascript %}
+  <script>
+    var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    });
+  </script>
+{% endblock %}
+    <!-- Page Add Section Begin -->
+    <section class="page-add">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="page-breadcrumb">
+                        <h2>Dresses<span>.</span></h2>
+                        <a href="#">Home</a>
+                        <a href="#">Dressves</a>
+                        <a class="active" href="#">Night Dresses</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <img src="{% static 'img/add.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Add Section End -->
+
+    <!-- Categories Page Section Begin -->
+    <section class="categories-page spad">
+        <div class="container">
+            <div class="categories-controls">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="categories-filter">
+                            <div class="cf-left">
+                                <form  method="POST">
+                                        {% csrf_token %}
+                                    <select class="sort" onChange="form.submit()" name="productFilter">
+                                        <option value="">Sort by</option>
+                                        <option value="order">Orders</option>
+                                        <option value="featured">Newest</option>
+                                        <option value="price">Price</option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="cf-right">
+                                <span>20 Products</span>
+                                <a href="#">2</a>
+                                <a href="#" class="active">4</a>
+                                <a href="#">6</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="row">
+              <div class="infinite-container">
+                   
+                         {% for item in product_list %}
+                            <div class="infinite-item">
+                              <div class="col-lg-3 col-md-6">
+                                 <div class="single-product-item">
+                                    <figure>
+                                       <img src="../media/{{ item.image.first.image }}" alt="">
+                                       {% comment %} <div class="p-status popular">popular</div> {% endcomment %}
+                                         {% if item.featured %}
+                                        <div class="p-status">new</div>
+                                         {% else %}
+                                        <div class="p-status sale">sale</div>
+                                         {% endif %}
+                                        <div class="hover-icon">
+                                         <a href="../media/{{ i.image.first.image }}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
+                                         alt=""></a>
+                                       </div>
+                                    </figure>
+                                <div class="product-text">
+                                   <a href="{{item.get_absolute_url}}">
+                                     <h6>{{item.name}}</h6>
+                                   </a>
+                                   <p>shs.{{item.price}}</p>
+                               </div>
+                              </div>
+                         </div>
+                         {% endfor %}
+                    </div>
+              </div>
+              <div class="loading" style="display: none;">
+                 Loading...
+              </div>
+                     
+              {% if product_list.has_next %}
+              
+                   <a class="infinite-more-link" href="?page={{ product_list.next_page_number }}">
+                        <div class="more-product">
+                          <div class="row">
+                           <div class="col-lg-12 text-center">
+                            Load More
+                          </div>
+                     </div>
+                    </div>
+                   </a>
+              {% endif %}
+        </div>
+    </section>
+    <!-- Categories Page Section End -->
+{% endblock  %}
+   

@@ -1,15 +1,28 @@
 {% extends "required/base.html" %}
 {% load static %}
 {% block content %}
+{% block javascript %}
+  <script>
+    {% comment %} var infinite = new Waypoint.Infinite({
+      element: $('.infinite-container')[0],
+      onBeforePageLoad: function () {
+        $('.loading').show();
+      },
+      onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+      }
+    }); {% endcomment %}
+  </script>
+{% endblock %}
     <!-- Page Add Section Begin -->
     <section class="page-add">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="page-breadcrumb">
-                        <h2>Dresses<span>.</span></h2>
-                        <a href="#">Home</a>
-                        <a href="#">Dresses</a>
+                        <h2>category<span>.</span></h2>
+                        <a href="{% url 'category' %}">Home</a>
+                        <a href="">Dressves</a>
                         <a class="active" href="#">Night Dresses</a>
                     </div>
                 </div>
@@ -29,277 +42,94 @@
                     <div class="col-lg-12">
                         <div class="categories-filter">
                             <div class="cf-left">
-                                <form action="#">
-                                    <select class="sort">
+                                <form  method="POST">
+                                        {% csrf_token %}
+                                    <select class="sort" onChange="form.submit()" name="productFilter">
                                         <option value="">Sort by</option>
-                                        <option value="">Orders</option>
-                                        <option value="">Newest</option>
-                                        <option value="">Price</option>
+                                        <option value="order">Orders</option>
+                                        <option value="featured">Newest</option>
+                                        <option value="price">Price</option>
                                     </select>
                                 </form>
                             </div>
-                            <div class="cf-right">
-                                <span>20 Products</span>
+                            {% comment %} <div class="cf-right">
+                                <span>Products</span>
                                 <a href="#">2</a>
                                 <a href="#" class="active">4</a>
                                 <a href="#">6</a>
-                            </div>
+                            </div> {% endcomment %}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-9.jpg' %}" alt="">
-                            <div class="p-status">new</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-9.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Green Dress with details</h6>
-                            </a>
-                            <p>$22.90</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
+              
+              {% comment %} <div class="infinite-container"> {% endcomment %}
                     <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-2.jpg' %}" alt="">
-                                    <div class="p-status sale">sale</div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>Yellow Maxi Dress</h6>
-                                    </a>
-                                    <p>$25.90</p>
+                         {% for item in product_list %}
+                             {% comment %} <div class="infinite-item"> {% endcomment %}
+                              <div class="col-lg-3 col-md-6">
+                                 <div class="single-product-item">
+                                    <figure>
+                                       <img src="../media/{{ item.image.first.image }}" alt="">
+                                       {% comment %} <div class="p-status popular">popular</div> {% endcomment %}
+                                         {% if item.featured %}
+                                        <div class="p-status">new</div>
+                                         {% else %}
+                                        <div class="p-status sale">sale</div>
+                                         {% endif %}
+                                        <div class="hover-icon">
+                                         <a href="../media/{{ item.image.first.image }}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
+                                         alt=""></a>
+                                       </div>
+                                    </figure>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-3.jpg' %}" alt="">
-                                    <div class="p-status">new</div>
-                                    <div class="hover-icon">
-                                        <a href="{% static 'img/products/img-3.jpg' %}" class="pop-up"><img
-                                                src="{% static 'img/icons/zoom-plus.png' %}" alt=""></a>
-                                    </div>
-                                </figure>
                                 <div class="product-text">
-                                    <a href="#">
-                                        <h6>One piece bodysuit</h6>
-                                    </a>
-                                    <p>$19.90</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-6.jpg' %}" alt="">
-                                    <div class="p-status sale">sale</div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>Yellow Maxi Dress</h6>
-                                    </a>
-                                    <p>$25.90</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-1.jpg' %}" alt="">
-                                    <div class="hover-icon">
-                                        <a href="{% static 'img/products/img-1.jpg' %}" class="pop-up"><img
-                                                src="{% static 'img/icons/zoom-plus.png' %}" alt=""></a>
-                                    </div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>One piece bodysuit</h6>
-                                    </a>
-                                    <p>$19.90</p>
-                                </div>
-                            </div>
-                        </div>
+                                   <a href="{{item.get_absolute_url}}">
+                                     <h6>{{item.name}}</h6>
+                                   </a>
+                                   <p>shs.{{item.price}}</p>
+                               </div>
+                              </div>
+                            {% comment %} </div> {% endcomment %}
+                         {% endfor %}
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-5.jpg' %}" alt="">
-                            <div class="p-status">new</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-5.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Green Dress with details</h6>
-                            </a>
-                            <p>$22.90</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-4.jpg' %}" alt="">
-                            <div class="p-status popular">popular</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-4.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>}
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Blue Dress with details</h6>
-                            </a>
-                            <p>$35.50</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-8.jpg' %}" alt="">
-                            <div class="p-status popular">popular</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-8.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Blue Dress with details</h6>
-                            </a>
-                            <p>$35.50</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-10.jpg' %}" alt="">
-                            <div class="p-status popular">popular</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-10.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Blue Dress with details</h6>
-                            </a>
-                            <p>$35.50</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-11.jpg' %}" alt="">
-                                    <div class="p-status sale">sale</div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>Yellow Maxi Dress</h6>
-                                    </a>
-                                    <p>$25.50</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-12.jpg' %}" alt="">
-                                    <div class="p-status">new</div>
-                                    <div class="hover-icon">
-                                        <a href="{% static 'img/products/img-12.jpg' %}" class="pop-up"><img
-                                                src="{% static 'img/icons/zoom-plus.png' %}" alt=""></a>
-                                    </div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>One piece bodysuit</h6>
-                                    </a>
-                                    <p>$19.90</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-14.jpg' %}" alt="">
-                                    <div class="p-status sale">sale</div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>Yellow Maxi Dress</h6>
-                                    </a>
-                                    <p>$25.90</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="single-product-item">
-                                <figure>
-                                    <img src="{% static 'img/products/img-15.jpg' %}" alt="">
-                                    <div class="hover-icon">
-                                        <a href="{% static 'img/products/img-15.jpg' %}" class="pop-up"><img
-                                                src="{% static 'img/icons/zoom-plus.png' %}" alt=""></a>
-                                    </div>
-                                </figure>
-                                <div class="product-text">
-                                    <a href="#">
-                                        <h6>One piece bodysuit</h6>
-                                    </a>
-                                    <p>$19.90</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <div class="single-product-item">
-                        <figure>
-                            <img src="{% static 'img/products/img-13.jpg' %}" alt="">
-                            <div class="p-status">new</div>
-                            <div class="hover-icon">
-                                <a href="{% static 'img/products/img-13.jpg' %}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
-                                        alt=""></a>
-                            </div>
-                        </figure>
-                        <div class="product-text">
-                            <a href="#">
-                                <h6>Green Dress with details</h6>
-                            </a>
-                            <p>$22.90</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="more-product">
-                <div class="row">
-                    <div class="col-lg-12 text-center">
-                        <a href="#" class="primary-btn">Load More</a>
-                    </div>
-                </div>
-            </div>
+              {% comment %} </div> {% endcomment %}
+              {% comment %} <div class="loading" style="display: none;">
+                 Loading...
+              </div> {% endcomment %}
+              <nav aria-label="Page navigation">  
+                  <ul class="pagination">
+                     {% if product_list.has_previous %}
+                     <li class="page-item">
+                       <a class="page-link" href="?page=1" aria-label="Previous">
+                         <span aria-hidden="true">&laquo;</span>
+                         <span class="sr-only">begin</span>
+                       </a>
+                     </li>   {% endif %}
+                     
+                     {% for n in product_list.paginator.page_range %}
+                       {% if product_list.number == n %}
+                         <li class="page-item active">
+                           <span class="page-link">{{ n }}<span class="sr-only">(current)</span></span>
+                         </li>
+                       {% elif n > product_list.number|add:'-3' and n < product_list.number|add:'3' %}
+                         <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+                       {% endif %}
+                     {% endfor %}
+                     
+                     {% if product_list.has_next %}
+                       <li class="page-item">
+                         <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                           <span aria-hidden="true">&raquo;</span>
+                           <span class="sr-only">end</span>
+                         </a>
+                       </li>
+                       {% endif %} 
+                     </ul>
+                 </nav>
+                     
         </div>
+        
     </section>
     <!-- Categories Page Section End -->
 {% endblock  %}

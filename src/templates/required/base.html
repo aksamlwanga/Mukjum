@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-
+     
 	</head>
 	<body>
 	  
@@ -211,10 +211,13 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/infinite.min.js' %}"></script>
 	<!-- Flexslider -->
 	<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
     <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
     <script src="{% static 'js/mixitup.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+     {% block javascript %}{% endblock %}
+  
     </body>
     </html>

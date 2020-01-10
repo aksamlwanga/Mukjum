@@ -2,6 +2,7 @@ from django.shortcuts import render,get_list_or_404,redirect
 from .models import Product
 from django.http import Http404, request
 from django.db.models import Q
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 def indexview(request):
     queryset=Product.objects.all()
@@ -22,7 +23,35 @@ def contactView(request):
     return render(request,"contact.html")
 
 def categoriesView(request):
-    return render(request,"categories.html")
+    
+    if request.method=="POST":
+        productsfilter=request.POST['productFilter']
+        if productsfilter=='price':
+            queryset=Product.objects.filter().order_by('price').all()
+            
+        elif productsfilter=='featured':
+            queryset=Product.objects.filter().order_by('id').all()
+
+        elif productsfilter=='order':
+            queryset=Product.objects.filter(Q(title='shoes')).order_by('name').all()
+    else:    
+        queryset=Product.objects.all()
+
+    page = request.GET.get('page')
+
+    paginator = Paginator(queryset, 8)
+    try:
+        queryset_number = paginator.page(page)
+    except PageNotAnInteger:
+        queryset_number = paginator.page(1)
+    except EmptyPage:
+        queryset_number = paginator.page(paginator.num_pages)
+    context={
+        'product_list':queryset_number,
+        
+    }
+
+    return render(request,"categories.html",context)
 
 def shoppingCartView(request):
     return render(request,"shopping-cart.html")
