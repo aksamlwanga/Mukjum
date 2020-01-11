@@ -1,7 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="zxx">
-
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Yoga Studio Template">
@@ -14,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
      
 	</head>
+        {% block css %}
+           
+    
+        {% endblock  %}
 	<body>
 	  
     
@@ -66,7 +70,7 @@
                 <nav class="main-menu mobile-menu">
                     <ul>
                         <li><a class="active" href="{% url 'home'%} ">Home</a></li>
-                        <li><a href="{% url 'category' %}">Shop</a>
+                        <li><a href="{% url 'category' 1 %}">Shop</a>
                             <ul class="sub-menu">
                                 <li><a href="{% url 'product' %}">Product Page</a></li>
                                 <li><a href="{% url 'order' %}">Shopping Card</a></li>

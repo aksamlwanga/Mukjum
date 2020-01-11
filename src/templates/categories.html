@@ -70,7 +70,7 @@
                               <div class="col-lg-3 col-md-6">
                                  <div class="single-product-item">
                                     <figure>
-                                       <img src="../media/{{ item.image.first.image }}" alt="">
+                                       <img src="../../media/{{ item.image.first.image }}" alt="">
                                        {% comment %} <div class="p-status popular">popular</div> {% endcomment %}
                                          {% if item.featured %}
                                         <div class="p-status">new</div>
@@ -78,7 +78,7 @@
                                         <div class="p-status sale">sale</div>
                                          {% endif %}
                                         <div class="hover-icon">
-                                         <a href="../media/{{ item.image.first.image }}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
+                                         <a href="../../media/{{ item.image.first.image }}" class="pop-up"><img src="{% static 'img/icons/zoom-plus.png' %}"
                                          alt=""></a>
                                        </div>
                                     </figure>

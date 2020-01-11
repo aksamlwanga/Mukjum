@@ -22,6 +22,9 @@ from home.views import *
 urlpatterns = [
     path('',indexview, name='home'),
     path('categories/',categoriesView,name='category'),
+    path('catnavigation/',categoriesNavView,name='categorynav'),
+    path('categories/<int:category_id>/',categoriesView,name='category'),
+    path('categories/subcategory/<int:subcategory_id>',subcategoriesView,name='subcategory'),
     path('checkouts/',checkOutView,name='checkout'),
     path('products/<int:product_id>/',productPageView,name='product'),
     path('products/',productsPageView,name='product'),

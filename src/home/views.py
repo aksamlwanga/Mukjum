@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_list_or_404,redirect
-from .models import Product
+from .models import Product,ProductCategory,ProductSubCategory
 from django.http import Http404, request
 from django.db.models import Q
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -22,7 +22,14 @@ def checkOutView(request):
 def contactView(request):
     return render(request,"contact.html")
 
-def categoriesView(request):
+def categoriesNavView(request):
+     queryset=ProductCategory.objects.all()
+     context={
+        'object_list':queryset,
+    }
+     return render(request,"categoriesnav.html",context)
+
+def categoriesView(request,category_id):
     
     if request.method=="POST":
         productsfilter=request.POST['productFilter']
@@ -35,7 +42,37 @@ def categoriesView(request):
         elif productsfilter=='order':
             queryset=Product.objects.filter(Q(title='shoes')).order_by('name').all()
     else:    
-        queryset=Product.objects.all()
+        queryset=Product.objects.filter(categoryId_id=category_id)
+
+    page = request.GET.get('page')
+
+    paginator = Paginator(queryset, 8)
+    try:
+        queryset_number = paginator.page(page)
+    except PageNotAnInteger:
+        queryset_number = paginator.page(1)
+    except EmptyPage:
+        queryset_number = paginator.page(paginator.num_pages)
+    context={
+        'product_list':queryset_number,
+        
+    }
+    return render(request,"categories.html",context)
+
+def subcategoriesView(request,subcategory_id):
+    
+    if request.method=="POST":
+        productsfilter=request.POST['productFilter']
+        if productsfilter=='price':
+            queryset=Product.objects.filter(subCategoryId_id=subcategory_id).order_by('price').all()
+            
+        elif productsfilter=='featured':
+            queryset=Product.objects.filter(subCategoryId_id=subcategory_id).order_by('id').all()
+
+        elif productsfilter=='order':
+            queryset=Product.objects.filter(subCategoryId_id=subcategory_id).order_by('name').all()
+    else:    
+        queryset=Product.objects.filter(subCategoryId_id=subcategory_id)
 
     page = request.GET.get('page')
 
@@ -62,9 +99,9 @@ def productPageView(request,product_id):
     try:
          productsobject= Product.objects.get(id=product_id)
          imageobject=productsobject.image.all()
-         queryset=Product.objects.filter(Q(featured=True) | Q(catergory=productsobject.catergory) )
-         next_product=Product.objects.filter(catergory=productsobject.catergory,id=productsobject.id+1).order_by('id').first()
-         previous_product=Product.objects.filter(catergory=productsobject.catergory,id=productsobject.id-1).order_by('id').first()
+         queryset=Product.objects.filter(Q(featured=True) | Q(name=productsobject.name) )
+         next_product=Product.objects.filter(name=productsobject.name,id=productsobject.id+1).order_by('id').first()
+         previous_product=Product.objects.filter(name=productsobject.name,id=productsobject.id-1).order_by('id').first()
          print(next_product,previous_product)
         #  for i in imageobject:
         #      print(i.image)

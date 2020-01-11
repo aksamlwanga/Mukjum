@@ -1,0 +1,150 @@
+{% extends "required/base.html" %}
+{% load static %}
+{% block css %}
+<style>
+
+        body
+        {
+            font-family:Arial;
+        }
+
+
+        #menu {
+            overflow: auto;
+            position:relative;
+            z-index:2;
+        }
+
+
+        .parent-menu {
+            background-color: #0c8fff;
+            min-width:200px;
+            float:left;
+        }
+
+
+        #menu ul
+        {
+            list-style-type:none;
+        }
+
+
+        #menu ul li a
+        {
+
+            padding:10px 15px;
+            display:block;
+            color:#fff;
+            text-decoration:none;
+        }
+
+
+            #menu ul li a:hover
+            {
+                background-color:#007ee9;
+            }
+
+
+#menu ul li:hover > ul {
+
+                left: 200px;
+
+                -webkit-transition: left 200ms ease-in;
+
+                -moz-transition: left 200ms ease-in;
+
+                -ms-transition: left 200ms ease-in;
+
+                transition: left 200ms ease-in;
+
+            }
+
+
+            #menu ul li > ul {
+
+                position: absolute;
+
+                background-color: #333;
+
+                top: 0;
+
+                left: -200px;
+
+                min-width: 200px;
+
+                z-index: -1;
+
+                height: 100%;
+
+                -webkit-transition: left 200ms ease-in;
+
+                -moz-transition: left 200ms ease-in;
+
+                -ms-transition: left 200ms ease-in;
+
+                transition: left 200ms ease-in;
+
+            }
+
+
+            #menu ul li > ul li a:hover
+
+            {
+                     background-color: #333;
+                
+            }
+ </style>
+
+{% endblock  %}
+{% block content %}
+    <!-- Page Add Section Begin -->
+    <section class="page-add">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="page-breadcrumb">
+                        <h2>ALL CATEGORIES<span>.</span></h2>
+                        <a href="{% url 'category'  %}">Home</a>
+                            <a class="active" href="{% url 'category' %}">{{request.path}}</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <img src="{% static 'img/add.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page Add Section End -->
+
+    <!-- Categories Page Section Begin -->
+    <section class="categories-page spad">
+<div class="container" style="background-color:gray">  
+<nav id="menu">
+        <ul class="parent-menu list-group">
+            {% for p in object_list.all  %}
+                   
+            <li class="list-item"><a href="{{ p.get_absolute_url }}">{{p.categoryName }}</a>
+                
+                <ul> 
+                     {% for j in p.productCategory.all %}
+                    <li><a href="{{j.get_absolute_url}}">{{j.subCategoryName}}</a>
+                          <ul>
+                               {% for k in j.subCategory.all|slice:"4" %}
+                                   <li><a href="{{ k.get_absolute_url }}">{{k.name}}</a></li>
+                               {% endfor %} 
+                         </ul>
+                    </li>
+                         
+                     {% endfor %}
+                </ul>
+            </li>
+
+            {% endfor %} 
+         </ul>
+      </nav>
+   
+</div>        
+    </section>
+    <!-- Categories Page Section End -->
+{% endblock  %}
+   
